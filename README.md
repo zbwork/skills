@@ -32,6 +32,6 @@ skills/
 python3 scripts/build.py --check
 ```
 
-CI 只做完整性校验，不创建 Release、标签或部署。scripts/build.py 另可生成本地静态导出，后续客户端接入单独处理。数字员工在 [zbwork/agents](https://github.com/zbwork/agents)，通过稳定 skill_uuid 引用此仓库。
+PR CI 只做完整性校验；main 推送或手动运行 Deploy Pages 会构建目录、图标和技能包并部署到 GitHub Pages。不创建 Release 或标签。客户端匿名读取 https://zbwork.github.io/skills/catalog/v1/skills.json ，包通过同站点 packages/ 下载。数字员工在 [zbwork/agents](https://github.com/zbwork/agents)，通过稳定 skill_uuid 引用此仓库。
 
 Codex 只能本地提交；远端推送由仓库所有者执行。
