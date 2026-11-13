@@ -27,7 +27,11 @@ def main():
     for item in skills:
         code=item['code'];version=item['latest_version']
         if not re.fullmatch(r'[A-Za-z0-9_-]+',code):raise ValueError('Unsafe skill code')
-        folder=ROOT/'skills'/code;files=[];seen=set()
+        source=pathlib.PurePosixPath(item.get('source_path','skills/'+code))
+        if source.is_absolute() or '..' in source.parts or '\\' in str(source) or not str(source).startswith('skills/'):raise ValueError('Unsafe source path')
+        folder=ROOT/source
+        if folder.is_symlink() or not folder.resolve().is_relative_to((ROOT/'skills').resolve()):raise ValueError('Skill source escapes skill root')
+        files=[];seen=set()
         for path in sorted(folder.rglob('*')):
             if path.is_symlink():raise ValueError('Symlink not allowed: '+str(path))
             if not path.is_file():continue
@@ -53,7 +57,7 @@ def main():
             if sha(body)!=path.stem:raise ValueError('Image digest mismatch')
     for name,data in catalogs.items():
         data['data']['total']=len(data['data']['items']);dump(stage/'catalog/v1'/f'{name}.json',data)
-    (stage/'index.html').write_text('<!doctype html><meta charset="utf-8"><title>知办AI 官方资源</title><h1>知办AI 官方资源</h1><p>数字员工、技能目录、图标与版本化技能包。</p>')
+    (stage/'index.html').write_text('<!doctype html><meta charset="utf-8"><title>知办AI 官方技能</title><h1>知办AI 官方技能</h1><p>技能目录、图标与版本化技能包。</p>')
     (stage/'.nojekyll').touch()
     if args.check:shutil.rmtree(stage)
     else:
