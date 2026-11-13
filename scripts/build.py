@@ -1,4 +1,4 @@
-"""Validate editable resources and build an atomic Pages/Release publication."""
+"""Validate editable resources and build a local static resource export."""
 import argparse, hashlib, io, json, pathlib, re, shutil, zipfile
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 def sha(body):return hashlib.sha256(body).hexdigest()
@@ -12,8 +12,8 @@ def zip_bytes(files):
     return output.getvalue()
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--check',action='store_true');ap.add_argument('--local',action='store_true');args=ap.parse_args()
-    config=json.loads((ROOT/'resource.json').read_text());repo=config['repository'];release=config['release']
-    if not re.fullmatch(r'[\w.-]+/[\w.-]+',repo) or not re.fullmatch(r'[\w.-]+',release):raise ValueError('Invalid repository/release')
+    config=json.loads((ROOT/'resource.json').read_text());repo=config['repository']
+    if not re.fullmatch(r'[\w.-]+/[\w.-]+',repo):raise ValueError('Invalid repository')
     stage=ROOT/'_site.next';shutil.rmtree(stage,ignore_errors=True);stage.mkdir()
     (stage/'packages').mkdir();shutil.copytree(ROOT/'assets',stage/'assets')
     catalogs={name:json.loads((ROOT/'catalog/v1'/f'{name}.json').read_text()) for name in ['skills']}
@@ -46,7 +46,7 @@ def main():
         manifest={'format_version':1,'skills':[{'code':code,'version':{'version':version,'package_path':'skill.zip','package_sha256':sha(inner)}}]}
         outer=zip_bytes([('manifest.json',json.dumps(manifest).encode(),0o644),('skill.zip',inner,0o644)])
         digest=sha(outer);filename=f'{code}-{digest}.zip';(stage/'packages'/filename).write_bytes(outer)
-        item['bundle_sha256']=digest;item['bundle_url']=('packages/'+filename if args.local else f'https://github.com/{repo}/releases/download/{release}/{filename}')
+        item['bundle_sha256']=digest;item['bundle_url']='packages/'+filename
     for rows,field in [(skills,'icon_url')]:
         for item in rows:
             value=item.get(field,'')

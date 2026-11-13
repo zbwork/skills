@@ -1,26 +1,37 @@
 # 知办AI 官方技能
 
-独立仓库：分类、技能目录、图标和完整可编辑源码。员工目录在 zbwork/agents，按稳定 skill_uuid 引用这里的技能。
+官方技能源码仓库。按分类浏览，每个技能都有独立目录、SKILL.md 和完整附属资源。
 
-- catalog/v1/skills.json：目录元数据；修改技能内容时提升 latest_version。
-- skills/<分类 code>/<code>/：SKILL.md、脚本与参考资源，保留第三方许可。
-- assets/skills/：SHA-256 命名图标。
-- resource.json：本次 release 版本，每次发布更新。
-
-```sh
-python3 scripts/build.py --check
-python3 scripts/build.py --local
-```
-
-正常构建生成 Releases 版本化包地址；--local 生成本地相对地址。用户推送 main 后工作流先上传并逐字节核对包，再发布 Pages。同名不同内容的包禁止覆盖；发布不读原服务器。
-
-先发布 skills，再发布 agents；后者校验已发布的技能引用。首次用户推送之前 Pages 不可用。Codex 只做本地 Git 提交，不执行 push。
-
-## 分类浏览
+## 分类
 
 - [办公学习](skills/office_study/README.md)
 - [生活日常](skills/daily_life/README.md)
 - [休闲娱乐](skills/leisure_entertainment/README.md)
 - [未分类](skills/uncategorized/README.md)
 
-参考 [mattpocock/skills engineering](https://github.com/mattpocock/skills/tree/main/skills/engineering)：分类 README → 单技能目录 → SKILL.md 与附属资源。source_path 只定位源码，技能 UUID/code、包内路径与安装协议保持不变。原无分类的 code_daily_summary 仍保留 category_id=null，只在源码索引归入未分类。
+```text
+skills/
+  office_study/
+    README.md
+    <skill-code>/
+      SKILL.md
+      scripts/        # 有脚本的技能
+      references/     # 有参考资源的技能
+```
+
+组织方式参考 [mattpocock/skills engineering](https://github.com/mattpocock/skills/tree/main/skills/engineering)。沿用既有分类与技能内容，不改变 UUID、code、版本或附属资源的相对路径。原无分类的 code_daily_summary 保持 category_id=null，在源码索引归入未分类。
+
+## 维护与校验
+
+- 技能内容在 skills/<分类 code>/<code>/ 中编辑。
+- catalog/v1/skills.json 保存元数据与 source_path，assets/skills/ 保存原图标。
+- 图标按文件 SHA-256 命名；技能内容更新应提升 latest_version。
+- 保留各技能自带的第三方许可文件。
+
+```sh
+python3 scripts/build.py --check
+```
+
+CI 只做完整性校验，不创建 Release、标签或部署。scripts/build.py 另可生成本地静态导出，后续客户端接入单独处理。数字员工在 [zbwork/agents](https://github.com/zbwork/agents)，通过稳定 skill_uuid 引用此仓库。
+
+Codex 只能本地提交；远端推送由仓库所有者执行。
