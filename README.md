@@ -2,6 +2,8 @@
 
 官方技能源码仓库。按分类浏览，每个技能都有独立目录、SKILL.md 和完整附属资源。
 
+欢迎提交新技能、改进现有技能或反馈问题，开始前请阅读[贡献指南](CONTRIBUTING.md)。
+
 ## 分类
 
 - [办公学习](skills/office_study/README.md)
