@@ -1296,6 +1296,22 @@
         "latest_version": "0.1.0",
         "sort_order": 0,
         "source_path": "skills/office_study/create_personal_homepage"
+      },
+      {
+        "skill_uuid": "28847d93-06f5-49e7-aabf-0b52b3510c8a",
+        "code": "frontend-design",
+        "name": "Frontend Design 网页设计",
+        "description": "根据具体内容设计有辨识度的前端网页，关注视觉方向、排版、颜色和交互。",
+        "usage_example": "把我的简历和项目经历整理成手机和电脑都能浏览的作品主页。",
+        "source": "open_source",
+        "kind": "agent",
+        "category_id": 11,
+        "install_count": 0,
+        "icon_url": "",
+        "latest_version_uuid": "f8ef32d6-a0a0-41b1-8aab-ce3ea368cb6f",
+        "latest_version": "0.1.0",
+        "sort_order": 0,
+        "source_path": "skills/office_study/frontend-design"
       }
     ],
     "categories": [
