@@ -2,6 +2,7 @@
 
 | 技能 | 说明 |
 | --- | --- |
+| [Frontend Design 网页设计](./frontend-design/SKILL.md) | 依据内容设计网页视觉与交互。 |
 | [产品路线图与指标设计](./zb_product_roadmap_metrics/SKILL.md) | 把已确认产品目标和优先机会组织成主题路线图、依赖、成功指标与验证计划草案。 基于开源方法和知办岗位规则重写，来源与许可见技能包 ORIGIN.md。 |
 | [产品机会评估与优先级](./zb_product_opportunity_priority/SKILL.md) | 从用户问题和多源证据评估产品机会，形成有依据的价值、成本风险与优先级建议。 基于开源方法和知办岗位规则重写，来源与许可见技能包 ORIGIN.md。 |
 | [干系人与跨团队依赖管理](./zb_project_stakeholder_dependency/SKILL.md) | 维护干系人责任、跨团队依赖、沟通节奏和升级条件，识别关键路径上的协调风险。 基于开源方法和知办岗位规则重写，来源与许可见技能包 ORIGIN.md。 |
